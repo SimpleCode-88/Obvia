@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Obvia - Focused Productivity Timer</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="Icon.png" type="image/png" />
+</head>
+<body>
+
+  <!-- Pomodoro Timer Card -->
+  <main class="glass-card" aria-label="Obvia productivity timer app">
+    <!-- Timer Display -->
+    <div id="timer-display" aria-live="polite" aria-atomic="true" aria-label="Timer">00:00</div>
+    <div id="session-type" aria-live="polite" aria-atomic="true" aria-label="Session type">Work</div>
+    <div id="session-counter" aria-live="polite" aria-atomic="true" aria-label="Session counter">Session: 0 / 4</div>
+
+    <div class="controls" role="group" aria-label="Timer controls">
+      <button id="start-btn" type="button">Start</button>
+      <button id="pause-btn" type="button">Pause</button>
+      <button id="reset-btn" type="button">Reset</button>
+    </div>
+  </main>
+
+  <!-- To-Do List Card -->
+  <section class="glass-card todo-card" aria-label="Task Tracker" tabindex="0" style="margin-top: 2.5rem;">
+    <div id="task-tracker" style="width: 100%;">
+      <h2>Task Tracker</h2>
+      <form id="task-form" aria-label="Add new task" style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+        <input type="text" id="task-input" placeholder="Enter current task name" aria-label="Task name" required autocomplete="off" />
+        <button type="submit">Add / Update Task</button>
+      </form>
+      <ul id="task-list" aria-live="polite" aria-atomic="true" aria-relevant="additions removals"></ul>
+    </div>
+  </section>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- Bottom Navigation Bar -->
+  <nav id="bottom-nav" role="navigation" aria-label="Main Navigation">
+    <button id="nav-home" class="nav-btn" aria-label="Go to Home" type="button">
+      🏠 Home
+    </button>
+    <button id="nav-tasks" class="nav-btn" aria-label="Show Task Tracker" aria-pressed="false" type="button">
+      ✅ Tasks
+    </button>
+    <a href="settings.html" id="nav-settings" class="nav-btn" aria-label="Go to Settings">
+      ⚙️ Settings
+    </a>
+    <button id="nav-theme-toggle" class="nav-btn" aria-label="Toggle Dark Mode" type="button">
+      🌙
+    </button>
+  </nav>
+
+  <script src="theme.js" defer></script>
+  <script src="timer.js" defer></script>
+  <script src="tasks.js" defer></script>
+  <script src="serviceWorker.js" defer></script>
+</body>
+</html>

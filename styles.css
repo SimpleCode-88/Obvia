@@ -1,0 +1,468 @@
+/* === Theme Variables === */
+:root {
+  --bg-gradient-start: #fa9cc9;
+  --bg-gradient-end: #7fa7f5;
+  --card-bg: rgba(255, 255, 255, 0.18);
+  --text-primary: #48507e;
+  --text-secondary: #f994b5;
+  --button-bg-gradient: linear-gradient(90deg, #fda8d5, #90caf9);
+  --button-text-color: #47495b;
+  --toast-bg: rgba(255, 255, 255, 0.97);
+  --toast-text: #87588b;
+  --settings-bg: rgba(255, 255, 255, 0.96);
+}
+
+[data-theme="dark"] {
+  --bg-gradient-start: #2c3e50;
+  --bg-gradient-end: #34495e;
+  --card-bg: rgba(20, 20, 20, 0.8);
+  --text-primary: #e0eaff;
+  --text-secondary: #ffaacc;
+  --button-bg-gradient: linear-gradient(90deg, #a35c76, #476fb4);
+  --button-text-color: #e0dfe6;
+  --toast-bg: rgba(40, 40, 40, 0.9);
+  --toast-text: #fbc6d1;
+  --settings-bg: rgba(30, 30, 30, 0.9);
+}
+
+/* === Body and HTML base === */
+body, html {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: 'Montserrat', Arial, sans-serif;
+  background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+  padding-bottom: 56px; /* to avoid content behind nav */
+}
+
+/* === Glass Card === */
+.glass-card {
+  background: var(--card-bg);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+  backdrop-filter: blur(13px);
+  -webkit-backdrop-filter: blur(13px);
+  border-radius: 2rem;
+  border: 1px solid rgba(200, 200, 255, 0.25);
+  padding: 2.5rem 2rem;
+  max-width: 340px;
+  width: 96vw;
+  margin: 8vw auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* === Todo Card overrides === */
+.glass-card.todo-card {
+  margin: 2.5rem auto 0 auto;
+  max-width: 380px;
+  min-width: 260px;
+  width: 90vw;
+  padding: 2rem 1.5rem 1.7rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background: var(--card-bg);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+  color: var(--text-primary);
+  border-radius: 2rem;
+  border: 1px solid rgba(200, 200, 255, 0.25);
+  backdrop-filter: blur(13px);
+  -webkit-backdrop-filter: blur(13px);
+}
+
+/* === Headings and Timer Display === */
+h1,
+#timer-display {
+  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-shadow: 0 1px 10px #e8c6fa22;
+  font-size: 3.2rem;
+  transition: color 0.18s;
+}
+
+#session-type {
+  font-size: 1.22rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-shadow: 0 1px 3px #eaf6fed2;
+  letter-spacing: 0.07em;
+  margin-bottom: 1.48rem;
+}
+
+/* === Session Counter === */
+#session-counter {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+[data-theme="dark"] #session-counter {
+  color: var(--text-secondary);
+}
+
+/* === Controls container === */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* === Buttons === */
+button {
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-radius: 2em;
+  border: none;
+  background: var(--button-bg-gradient);
+  color: var(--button-text-color);
+  padding: 0.55em 1.5em;
+  margin: 0 0.15em;
+  cursor: pointer;
+  box-shadow: 0 5px 20px 0 rgba(151, 189, 240, 0.18);
+  transition: background 0.18s, color 0.12s;
+}
+
+button:active {
+  color: #f383a4;
+  background: linear-gradient(90deg, #e8ebf7 40%, #f3cdfe);
+}
+
+button:disabled,
+button.disabled {
+  background: #e6e9f6;
+  color: #bdb8c7;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* === Toast Notification === */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%) scale(0.97);
+  background: var(--toast-bg);
+  color: var(--toast-text);
+  border-radius: 14px;
+  box-shadow: 0 6px 38px 0 rgba(230, 180, 230, 0.17);
+  padding: 1.1em 2.1em;
+  font-size: 1.12rem;
+  font-weight: 600;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.18s, transform 0.26s;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* === Settings Modal === */
+#settings-modal {
+  background: var(--settings-bg);
+  border: none;
+  border-radius: 17px;
+  box-shadow: 0 8px 40px 0 rgba(95, 101, 220, 0.14);
+  max-width: 330px;
+  padding: 0;
+  margin: auto;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: background 0.3s, color 0.3s;
+}
+
+#settings-modal::backdrop {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+#settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem 1.25rem 1.1rem 1.25rem;
+}
+
+#settings-form h2 {
+  text-align: center;
+  color: var(--text-primary);
+  letter-spacing: 0.03em;
+  margin-bottom: 0.75em;
+  font-size: 1.4rem;
+}
+
+#settings-form label {
+  font-weight: 600;
+  font-size: 1.03rem;
+  color: #6c5b7b;
+  margin-bottom: 0.25em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.26em;
+}
+
+#settings-form input[type='number'] {
+  border-radius: 7px;
+  border: 1.5px solid #f7c9f7;
+  font-size: 1rem;
+  padding: 0.4em 0.8em;
+  margin-top: 0.1em;
+  margin-bottom: 0.3em;
+  min-width: 40px;
+  width: 95px;
+  font-family: inherit;
+}
+
+#settings-form menu {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5em;
+  gap: 1em;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+#settings-form button {
+  border-radius: 1.6em;
+  font-size: 1.05rem;
+  padding: 0.4em 1.25em;
+  box-shadow: none;
+}
+
+/* === Task Tracker Container === */
+#task-tracker {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* === Task Tracker Heading === */
+#task-tracker h2 {
+  margin-bottom: 0.7rem;
+  font-size: 1.22rem;
+  color: var(--text-secondary);
+  text-align: center;
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
+/* === Task Form Layout === */
+#task-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+}
+
+/* === Input Field === */
+#task-input {
+  flex: 1 1 55%;
+  padding: 0.55rem 0.75rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.07);
+  transition: border-color 0.3s ease;
+  outline-offset: 2px;
+}
+
+#task-input:focus {
+  border-color: var(--text-secondary);
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* === Form Button Styling === */
+#task-form button {
+  background: var(--button-bg-gradient);
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  color: var(--button-text-color);
+  padding: 0.48rem 1.25rem;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(151, 189, 240, 0.18);
+  transition: background-color 0.3s ease, color 0.2s ease;
+}
+
+#task-form button:hover,
+#task-form button:focus {
+  background: linear-gradient(90deg, #fca9d7, #74a7f2);
+  color: #ffffff;
+  outline: none;
+}
+
+#task-form button:disabled {
+  background: #e6e9f6;
+  color: #bdb8c7;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* === Task List Container (scrollable) === */
+#task-list {
+  list-style-type: disc;
+  padding-left: 1.3rem;
+  max-height: 190px;
+  min-height: 36px;
+  overflow-y: auto;
+  font-size: 1rem;
+  color: var(--text-primary);
+  user-select: none;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(150, 150, 150, 0.3) transparent;
+}
+
+/* Scrollbar Webkit */
+#task-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+#task-list::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.3);
+  border-radius: 4px;
+}
+
+#task-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* === Task List Items === */
+#task-list li {
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  line-height: 1.5;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+  outline-offset: 2px;
+  outline: none;
+  user-select: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#task-list li:focus-visible {
+  outline: 2px solid var(--text-secondary);
+  border-radius: 6px;
+}
+
+/* Hover and Focus states */
+#task-list li:hover,
+#task-list li:focus {
+  color: var(--text-secondary);
+  text-decoration: underline;
+  outline: 2px solid var(--text-secondary);
+  border-radius: 6px;
+}
+
+/* Completed Tasks */
+#task-list li.completed {
+  text-decoration: line-through;
+  color: rgba(150, 150, 150, 0.7);
+}
+
+/* Remove button in task list */
+#task-list li button {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.2em 0.4em;
+  line-height: 1;
+  user-select: none;
+  margin-left: 0.6rem;
+  transition: color 0.2s ease;
+}
+
+#task-list li button:hover,
+#task-list li button:focus-visible {
+  color: #f994b5;
+  outline: none;
+}
+
+#task-list li button:active {
+  color: #d46a93;
+}
+
+/* Controls Buttons active state */
+.controls button:active {
+  color: #f383a4;
+  background: linear-gradient(90deg, #e8ebf7 40%, #f3cdfe);
+}
+
+/* Bottom Navigation Bar */
+#bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background-color: var(--card-bg);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: color 0.3s, background 0.3s;
+  border-radius: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.nav-btn[aria-pressed="true"],
+.nav-btn:hover,
+.nav-btn:focus {
+  background: rgba(253, 168, 213, 0.4);
+  color: var(--button-text-color);
+  outline: none;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .glass-card.todo-card {
+    max-width: 95vw;
+    padding: 1.8rem 1rem;
+  }
+
+  #timer-display {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 350px) {
+  .glass-card {
+    padding: 0.4em 0.02em;
+    font-size: 95%;
+  }
+}
